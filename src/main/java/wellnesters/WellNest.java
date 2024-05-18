@@ -78,17 +78,17 @@ public class WellNest extends JFrame implements ActionListener, ListSelectionLis
 
 
         // Load DB Data
-        try {
-            Gson gson = new Gson();
+        // try {
+        //     Gson gson = new Gson();
 
-            // Load the JSON file
-            String json = new String(Files.readAllBytes(Paths.get(dbFileName)));
+        //     // Load the JSON file
+        //     String json = new String(Files.readAllBytes(Paths.get(dbFileName)));
 
-            DB db = gson.fromJson(json, DB.class);
+        //     DB db = gson.fromJson(json, DB.class);
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        // } catch (IOException e) {
+        //     e.printStackTrace();
+        // }
 
 
         // Main Header

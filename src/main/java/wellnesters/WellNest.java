@@ -37,6 +37,33 @@ public class WellNest extends JFrame {
         this.setMinimumSize(new Dimension(500, 500));
 
 
+        // [Create DB file (json) if it does not exist]
+        File dbFile = new File(dbFileName);
+        try {
+            // Check if the json file exists
+            if (!dbFile.exists()) {
+                // Create the json file
+                boolean created = dbFile.createNewFile();
+                if (created) {
+                    try (BufferedWriter writer = new BufferedWriter(new FileWriter(dbFile))) {
+                        // Add empty list to the file
+                        writer.write("[]");
+                    } catch (IOException e) {
+                        System.out.println("An error occurred while writing to the file: " + e.getMessage());
+                        e.printStackTrace();
+                    }
+
+                    System.out.println("DB File created successfully.");
+                } else {
+                    System.out.println("DB File creation failed.");
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+
         // Load DB Data
         try {
             Gson gson = new Gson();

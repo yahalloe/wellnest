@@ -24,17 +24,25 @@ import com.google.gson.JsonParser;
 // Local Classes
 
 
-public class WellNest extends JFrame {
+public class WellNest extends JFrame implements ActionListener, ListSelectionListener {
     // Global Variables
     private String dbFileName = "db.json";
+
+    // Today Panel
+    private JButton taskFinishedBtn;
+    private JButton skipTaskBtn;
+    private JButton editTaskBtn;
+    private JButton addTaskBtn;
+    DefaultListModel<String> todayTasksModel;
+    JList<String> todayTasksList;
 
     public WellNest() {
         // GUI Setup
         this.setLayout(new BorderLayout());
         this.setTitle("WellNest");
         this.setVisible(true);
-        this.setPreferredSize(new Dimension(500, 500));
-        this.setMinimumSize(new Dimension(500, 500));
+        this.setPreferredSize(new Dimension(500, 800));
+        this.setMinimumSize(new Dimension(500, 800));
 
 
         // Load DB Data
@@ -52,7 +60,7 @@ public class WellNest extends JFrame {
 
 
         // Main Header
-        JLabel header = new JLabel("Health and Fitness Trackers", SwingConstants.CENTER);
+        JLabel header = new JLabel("Health and Fitness Tracker", SwingConstants.CENTER);
 
         // Main Content
         JTabbedPane mainTabPane = new JTabbedPane();
@@ -63,11 +71,70 @@ public class WellNest extends JFrame {
         // --             Today Panel                -- 
         // -------------------------------------------- 
 
-        // Create panels for each tab
-        JPanel todayPanel = new JPanel();
-        todayPanel.add(new JLabel("Content for Tab 1"));
+        JPanel todayPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints todayPanelGbc = new GridBagConstraints();
+        todayPanelGbc.fill = GridBagConstraints.VERTICAL;
+        // Padding
+        todayPanelGbc.insets = new Insets(5, 0, 5, 0);
+        // Margins
+        todayPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
 
+        // -- Calendar panel --
+        JPanel todayCalendarPanel = new JPanel();
+        JLabel todayCalendarPlacdeholder = new JLabel("Calendar Placeholder");
+        addComponent(todayPanel, todayCalendarPlacdeholder, todayPanelGbc, 0, 0, 1, 1, GridBagConstraints.WEST);
+
+
+        // -- Tasks List Header --
+        JLabel tasksHeader = new JLabel("Tasks List", SwingConstants.LEFT);
+        addComponent(todayPanel, tasksHeader, todayPanelGbc, 
+        0, 1, 1, 1, GridBagConstraints.WEST);
+
+        // -- Add Task Button --
+        addTaskBtn = new JButton("+");
+        addTaskBtn.setActionCommand("Add Task");
+        addTaskBtn.addActionListener(this);
+        addComponent(todayPanel, addTaskBtn, todayPanelGbc, 
+        0, 2, 1, 1, GridBagConstraints.EAST);
+
+        // -- Tasks List --
+        DefaultListModel<String> todayTasksModel = new DefaultListModel<>();
+        JList<String> todayTasksList = new JList<>(todayTasksModel);
+        todayTasksList.addListSelectionListener(this);
+        todayTasksList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        JScrollPane todayTasksPane = new JScrollPane(todayTasksList);
+        todayTasksPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        addComponent(todayPanel, todayTasksPane, todayPanelGbc, 
+        0, 3, 1, 1, GridBagConstraints.EAST);
+
+        // -- Tasks List Buttons (Top) --
+        JPanel tasksListTopBtnGrp = new JPanel(new FlowLayout(FlowLayout.RIGHT, 5, 0));
+
+        // Task Finished Button
+        taskFinishedBtn = new JButton("Finished");
+        taskFinishedBtn.setActionCommand("Task Finished");
+        taskFinishedBtn.addActionListener(this);
+        taskFinishedBtn.setEnabled(false);
+
+        // Skip Task Button
+        skipTaskBtn = new JButton("Skip");
+        skipTaskBtn.setActionCommand("Skip Task");
+        skipTaskBtn.addActionListener(this);
+        skipTaskBtn.setEnabled(false);
+
+        // Edit Task Button
+        editTaskBtn = new JButton("Edit");
+        editTaskBtn.setActionCommand("Edit Task");
+        editTaskBtn.addActionListener(this);
+        editTaskBtn.setEnabled(false);
+
+        tasksListTopBtnGrp.add(taskFinishedBtn);
+        tasksListTopBtnGrp.add(skipTaskBtn);
+        tasksListTopBtnGrp.add(editTaskBtn);
+
+        addComponent(todayPanel, tasksListTopBtnGrp, todayPanelGbc, 
+        0, 4, 1, 1, GridBagConstraints.EAST);
 
         // -------------------------------------------- 
         // --             Stats Panel                -- 
@@ -98,5 +165,71 @@ public class WellNest extends JFrame {
 
         this.add(header, BorderLayout.NORTH);
         this.add(mainPane, BorderLayout.CENTER);
+    }
+
+    // Handles clicks to a button
+    public void actionPerformed(ActionEvent e) {
+        // Determines which button is clicked
+        String command = e.getActionCommand();
+
+        if (command == "Add Task") {
+
+        }
+
+        if (command == "Task Finished") {
+
+        }
+
+        if (command == "Skip Task") {
+
+        }
+
+        if (command == "Edit Task") {
+
+        }
+    }
+
+    public void valueChanged(ListSelectionEvent e) {
+        // Determines which JList triggered the event
+        JList<?> sourceList = (JList<?>) e.getSource();
+
+        if (!e.getValueIsAdjusting()) {
+            // Today Panel Tasks List
+            if (sourceList == todayTasksList) {
+                // Access the selected indices or values from the JList
+                // String selectedValue = ingrList.getSelectedValue().toString();
+
+                int selectedIndex = todayTasksList.getSelectedIndex();
+                // If there are items in the list
+                if (selectedIndex != -1) {
+                    // Enable the 'Task Finished Button'
+                    taskFinishedBtn.setEnabled(true);
+                    // Enable the 'Skip Task Button'
+                    skipTaskBtn.setEnabled(true);
+                    // Enable the 'Edit Task'
+                    editTaskBtn.setEnabled(true);
+                } 
+                // Otherwise
+                else {
+                    // Enable the 'Task Finished Button'
+                    taskFinishedBtn.setEnabled(false);
+                    // Enable the 'Skip Task Button'
+                    skipTaskBtn.setEnabled(false);
+                    // Enable the 'Edit Task'
+                    editTaskBtn.setEnabled(false);
+                }
+            }
+        }
+    }
+
+    // Utility function for adding component in a GridBagLayout
+    private static void addComponent(Container container, Component component, GridBagConstraints gbc,
+                                     int gridx, int gridy, int gridwidth, int gridheight, int anchor) {
+        gbc.gridx = gridx;
+        gbc.gridy = gridy;
+        gbc.gridwidth = gridwidth;
+        gbc.gridheight = gridheight;
+        gbc.anchor = anchor;
+        container.add(component, gbc);
     }
 }

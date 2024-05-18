@@ -1,7 +1,28 @@
 package wellnesters;
 
-import javax.swing.*;
+// Built-in Classes
 import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.event.*;
+import java.text.NumberFormat;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+
+// 3rd-Party (Downloaded) Classes
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+// Local Classes
+
 
 public class WellNest extends JFrame {
     public WellNest() {
@@ -11,65 +32,52 @@ public class WellNest extends JFrame {
         this.setPreferredSize(new Dimension(500, 500));
         this.setMinimumSize(new Dimension(500, 500));
 
-        // Top panel with GridBagLayout to respect preferred sizes
-        JPanel topPanel = new JPanel(new GridBagLayout());
-        topPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 10));
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.insets = new Insets(0, 0, 5, 0); // Add padding between components
+        // Main Header
+        JLabel header = new JLabel("Health and Fitness Trackers", SwingConstants.CENTER);
 
-        JLabel dayLabel = new JLabel("Date today");
-        dayLabel.setPreferredSize(new Dimension(300, 50));
-        dayLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        dayLabel.setBorder(BorderFactory.createLineBorder(Color.black));
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        topPanel.add(dayLabel, gbc);
+        // Main Content
+        JTabbedPane mainTabPane = new JTabbedPane();
 
-        JLabel calendarLabel = new JLabel("Calendar");
-        calendarLabel.setPreferredSize(new Dimension(300, 50));
-        calendarLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        calendarLabel.setBorder(BorderFactory.createLineBorder(Color.black));
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        topPanel.add(calendarLabel, gbc);
 
-        this.add(topPanel, BorderLayout.NORTH);
 
-        // Task panel with GridBagLayout to respect preferred sizes
-        JPanel taskPanel = new JPanel(new GridBagLayout());
-        taskPanel.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
-        GridBagConstraints gbcTask = new GridBagConstraints();
-        gbcTask.fill = GridBagConstraints.HORIZONTAL;
-        gbcTask.insets = new Insets(5, 5, 5, 5); // Add padding between components
+        // -------------------------------------------- 
+        // --             Today Panel                -- 
+        // -------------------------------------------- 
 
-        // Activity panel with GridBagLayout to respect preferred sizes
-        JPanel activityPanel = new JPanel(new GridBagLayout());
-        activityPanel.setBorder(BorderFactory.createLineBorder(Color.red));
-        GridBagConstraints gbcActivity = new GridBagConstraints();
-        gbcActivity.fill = GridBagConstraints.HORIZONTAL;
-        gbcActivity.insets = new Insets(5, 5, 5, 5); // Add padding between components
+        // Create panels for each tab
+        JPanel todayPanel = new JPanel();
+        todayPanel.add(new JLabel("Content for Tab 1"));
 
-        JLabel background = new JLabel("DO Anytime");
-        background.setPreferredSize(new Dimension(300, 100));
-        background.setHorizontalAlignment(SwingConstants.CENTER);
-        background.setBorder(BorderFactory.createLineBorder(Color.black));
-        gbcActivity.gridx = 0;
-        gbcActivity.gridy = 0;
-        activityPanel.add(background, gbcActivity);
 
-        JLabel progressBar = new JLabel("Progress");
-        progressBar.setPreferredSize(new Dimension(200, 100));
-        progressBar.setHorizontalAlignment(SwingConstants.CENTER);
-        progressBar.setBorder(BorderFactory.createLineBorder(Color.black));
-        gbcActivity.gridx = 0;
-        gbcActivity.gridy = 1;
-        activityPanel.add(progressBar, gbcActivity);
 
-        gbcTask.gridx = 0;
-        gbcTask.gridy = 0;
-        taskPanel.add(activityPanel, gbcTask);
+        // -------------------------------------------- 
+        // --             Stats Panel                -- 
+        // -------------------------------------------- 
 
-        this.add(taskPanel, BorderLayout.CENTER);
+        JPanel statsPanel = new JPanel();
+        statsPanel.add(new JLabel("Content for Tab 2"));
+
+
+
+        // -------------------------------------------- 
+        // --             All Habits Panel           -- 
+        // -------------------------------------------- 
+
+        JPanel allHabitsPanel = new JPanel();
+        allHabitsPanel.add(new JLabel("Content for Tab 3"));
+
+
+
+
+
+        // Add panels to the tabbed pane with tab titles
+        mainTabPane.addTab("Today", todayPanel);
+        mainTabPane.addTab("Stats", statsPanel);
+        mainTabPane.addTab("All Habits", allHabitsPanel);
+
+        JScrollPane mainPane = new JScrollPane(mainTabPane);
+
+        this.add(header, BorderLayout.NORTH);
+        this.add(mainPane, BorderLayout.CENTER);
     }
 }

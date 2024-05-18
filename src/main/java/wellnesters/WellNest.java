@@ -12,7 +12,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 // 3rd-Party (Downloaded) Classes
@@ -144,13 +145,13 @@ public class WellNest extends JFrame {
         // -------------------------------------------- 
 
     // Method to add completion timestamp
-    // public void addCompletionTime(Date timestamp) {
-    //     CompletionTime completionTime = new CompletionTime();
-    //     completionTime.timestamp = timestamp;
+    public void addCompletionTime(LocalDateTime timestamp) {
+        CompletionTime completionTime = new CompletionTime();
+        completionTime.timestamp = timestamp;
 
-    //     wellNestData.completionTimes.add(completionTime);
-    //     // Update statistics here
-    // }
+        wellNestData.completionTimes.add(completionTime);
+        // Update statistics here
+    }
 
     // Method to update statistics
     public void updateStatistics() {
@@ -189,6 +190,6 @@ public class WellNest extends JFrame {
     }
 
     class CompletionTime {
-        Date timestamp;
+        LocalDateTime timestamp;
     }
 

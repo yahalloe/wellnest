@@ -126,9 +126,9 @@ public class WellNest extends JFrame {
     // }
 
     // Method to update statistics
-    // public void updateStatistics() {
-    //     // Implement statistics update logic here
-    // }
+    public void updateStatistics() {
+        // Implement statistics update logic here
+    }
 
     // Method to save data to JSON file
     public void saveData() {

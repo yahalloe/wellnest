@@ -21,16 +21,37 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import wellnesters.DB.User;
+
 // Local Classes
 
 
 public class WellNest extends JFrame {
+    // Global Variables
+    private String dbFileName = "db.json";
+
     public WellNest() {
+        // GUI Setup
         this.setLayout(new BorderLayout());
         this.setTitle("WellNest");
         this.setVisible(true);
         this.setPreferredSize(new Dimension(500, 500));
         this.setMinimumSize(new Dimension(500, 500));
+
+
+        // [Load DB Data]
+        try {
+            Gson gson = new Gson();
+
+            // Load the JSON file
+            String json = new String(Files.readAllBytes(Paths.get(dbFileName)));
+
+            DB db = gson.fromJson(json, DB.class);
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
         // Main Header
         JLabel header = new JLabel("Health and Fitness Trackers", SwingConstants.CENTER);

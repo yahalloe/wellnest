@@ -112,19 +112,23 @@ public class WellNest extends JFrame {
         this.setVisible(true);
     }
 
-    // Method to add completion timestamp
-    public void addCompletionTime(Date timestamp) {
-        CompletionTime completionTime = new CompletionTime();
-        completionTime.timestamp = timestamp;
+        // -------------------------------------------- 
+        // --             Calendar                   -- 
+        // -------------------------------------------- 
 
-        wellNestData.completionTimes.add(completionTime);
-        // Update statistics here
-    }
+    // Method to add completion timestamp
+    // public void addCompletionTime(Date timestamp) {
+    //     CompletionTime completionTime = new CompletionTime();
+    //     completionTime.timestamp = timestamp;
+
+    //     wellNestData.completionTimes.add(completionTime);
+    //     // Update statistics here
+    // }
 
     // Method to update statistics
-    public void updateStatistics() {
-        // Implement statistics update logic here
-    }
+    // public void updateStatistics() {
+    //     // Implement statistics update logic here
+    // }
 
     // Method to save data to JSON file
     public void saveData() {

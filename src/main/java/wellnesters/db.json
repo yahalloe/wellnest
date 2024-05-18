@@ -1,5 +1,9 @@
 {
   "stats": {
-    "currentStreak": 0
+    "currentStreak": 0,
+    "longestStreak": 0,
+    "totalPerfectDays": 0,
+    "totalTimesCompleted": 0,
+    "totalDays": 0
   }
 }

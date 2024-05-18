@@ -39,6 +39,14 @@ public class WellNest extends JFrame implements ActionListener, ListSelectionLis
     DefaultListModel<String> todayTasksModel;
     JList<String> todayTasksList;
 
+    // Streak Tracker
+    private DB db;
+    private JLabel currentStreakLabel;
+    private JLabel longestStreakLabel;
+    private JLabel totalPerfectDaysLabel;
+    private JLabel totalDaysLabel;
+    private JLabel totalTimesCompletedLabel;
+
     public WellNest() {
 
         this.wellNestData = new WellNestData();
@@ -79,7 +87,10 @@ public class WellNest extends JFrame implements ActionListener, ListSelectionLis
 
         // Load DB Data
         // try {
-        //     Gson gson = new Gson();
+        // Gson gson = new Gson()
+        //         .registerTypeAdapter(LocalDate.class, new LocalDateSerializer())
+        //        .registerTypeAdapter(LocalDate.class, new LocalDateDeserializer())
+        //        .create();
 
         //     // Load the JSON file
         //     String json = new String(Files.readAllBytes(Paths.get(dbFileName)));
@@ -172,18 +183,22 @@ public class WellNest extends JFrame implements ActionListener, ListSelectionLis
         // --             Stats Panel                -- 
         // -------------------------------------------- 
         JPanel statsPanel = new JPanel(new GridLayout(5, 2));
+        currentStreakLabel = new JLabel(String.valueOf(wellNestData.stats.currentStreak));
+        longestStreakLabel = new JLabel(String.valueOf(wellNestData.stats.longestStreak));
+        totalPerfectDaysLabel = new JLabel(String.valueOf(wellNestData.stats.totalPerfectDays));
+        totalTimesCompletedLabel = new JLabel(String.valueOf(wellNestData.stats.totalTimesCompleted));
+        totalDaysLabel = new JLabel(String.valueOf(wellNestData.stats.totalDays));
+
         statsPanel.add(new JLabel("Current Streak: "));
-        statsPanel.add(new JLabel(String.valueOf(wellNestData.stats.currentStreak)));
+        statsPanel.add(currentStreakLabel);
         statsPanel.add(new JLabel("Longest Streak: "));
-        statsPanel.add(new JLabel(String.valueOf(wellNestData.stats.longestStreak)));
+        statsPanel.add(longestStreakLabel);
         statsPanel.add(new JLabel("Total Perfect Days: "));
-        statsPanel.add(new JLabel(String.valueOf(wellNestData.stats.totalPerfectDays)));
+        statsPanel.add(totalPerfectDaysLabel);
         statsPanel.add(new JLabel("Total Times Completed: "));
-        statsPanel.add(new JLabel(String.valueOf(wellNestData.stats.totalTimesCompleted)));
+        statsPanel.add(totalTimesCompletedLabel);
         statsPanel.add(new JLabel("Total Days: "));
-        statsPanel.add(new JLabel(String.valueOf(wellNestData.stats.totalDays)));
-
-
+        statsPanel.add(totalDaysLabel);
 
         // -------------------------------------------- 
         // --             All Habits Panel           -- 
@@ -215,14 +230,44 @@ public class WellNest extends JFrame implements ActionListener, ListSelectionLis
     public void addCompletionTime(LocalDateTime timestamp) {
         CompletionTime completionTime = new CompletionTime();
         completionTime.timestamp = timestamp;
-
         wellNestData.completionTimes.add(completionTime);
-        // Update statistics here
+        updateStatistics();
+        saveData();
     }
 
     // Method to update statistics
     public void updateStatistics() {
-        // Implement statistics update logic here
+        // Logic to update streaks
+        int currentStreak = 0;
+        int longestStreak = 0;
+        int totalPerfectDays = 0;
+        int totalTimesCompleted = wellNestData.completionTimes.size();
+        int totalDays = 0;
+
+        LocalDate lastCompletionDate = null;
+        for (CompletionTime completionTime : wellNestData.completionTimes) {
+            LocalDate completionDate = completionTime.timestamp.toLocalDate();
+            if (lastCompletionDate == null || !completionDate.equals(lastCompletionDate.plusDays(1))) {
+                currentStreak = 1;
+            } else {
+                currentStreak++;
+            }
+            lastCompletionDate = completionDate;
+            longestStreak = Math.max(longestStreak, currentStreak);
+        }
+
+        wellNestData.stats.currentStreak = currentStreak;
+        wellNestData.stats.longestStreak = longestStreak;
+        wellNestData.stats.totalPerfectDays = totalPerfectDays;
+        wellNestData.stats.totalTimesCompleted = totalTimesCompleted;
+        wellNestData.stats.totalDays = totalDays;
+
+        // Update labels
+        currentStreakLabel.setText(String.valueOf(currentStreak));
+        longestStreakLabel.setText(String.valueOf(longestStreak));
+        totalPerfectDaysLabel.setText(String.valueOf(totalPerfectDays));
+        totalTimesCompletedLabel.setText(String.valueOf(totalTimesCompleted));
+        totalDaysLabel.setText(String.valueOf(totalDays));
     }
 
     // Method to save data to JSON file

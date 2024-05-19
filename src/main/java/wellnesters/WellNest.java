@@ -287,10 +287,6 @@ public class WellNest extends JFrame implements ActionListener, ListSelectionLis
         // Determines which button is clicked
         String command = e.getActionCommand();
 
-        if (command == "Add Task") {
-
-        }
-
         if (command == "Task Finished") {
 
         }

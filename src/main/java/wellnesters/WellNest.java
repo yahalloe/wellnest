@@ -47,6 +47,9 @@ public class WellNest extends JFrame implements ActionListener, ListSelectionLis
     private JLabel totalDaysLabel;
     private JLabel totalTimesCompletedLabel;
 
+    // Add Habit Dialog
+    private JTextField regularHabitTextField;
+
     public WellNest() {
 
         this.wellNestData = new WellNestData();
@@ -104,6 +107,7 @@ public class WellNest extends JFrame implements ActionListener, ListSelectionLis
 
         // Main Header
         JLabel header = new JLabel("Health and Fitness Tracker", SwingConstants.CENTER);
+        header.setFont(new Font("Inter", Font.BOLD, 32));
 
         // Main Content
         JTabbedPane mainTabPane = new JTabbedPane();
@@ -286,6 +290,91 @@ public class WellNest extends JFrame implements ActionListener, ListSelectionLis
     public void actionPerformed(ActionEvent e) {
         // Determines which button is clicked
         String command = e.getActionCommand();
+
+        if (command == "Add Task") {
+            JDialog dialog = new JDialog(this, "New Task", true);  
+            dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); 
+            dialog.setPreferredSize(new Dimension(400, 400));
+            dialog.setMinimumSize(new Dimension(400, 400));
+            JTabbedPane tabbedPane = new JTabbedPane();
+
+            // ----------------------------------- 
+            // --       Add Regular Habit       -- 
+            // -----------------------------------
+
+            JPanel addRegularHabitPanel = new JPanel(new GridBagLayout());
+            GridBagConstraints addHabitGbc = new GridBagConstraints();
+            addHabitGbc.fill = GridBagConstraints.VERTICAL;
+            // Padding
+            addHabitGbc.insets = new Insets(5, 0, 5, 0);
+            // Margins
+            addRegularHabitPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+
+
+            // -- Header --
+            JLabel addHabitHeader = new JLabel("New Habit", SwingConstants.LEFT);
+            addHabitHeader.setFont(new Font("Inter", Font.BOLD, 24));
+            addComponent(addRegularHabitPanel, addHabitHeader, addHabitGbc, 0, 0, 1, 1, GridBagConstraints.WEST);
+
+
+            // -- Habit Name Text Field
+            regularHabitTextField = new JTextField();
+            regularHabitTextField.setPreferredSize(new Dimension(300, 30));
+            addComponent(addRegularHabitPanel, regularHabitTextField, addHabitGbc, 0, 1, 1, 1, GridBagConstraints.WEST);
+
+            addComponent(addRegularHabitPanel, new JSeparator(), addHabitGbc, 0, 2, 1, 1, GridBagConstraints.WEST);
+
+
+            // -- Interval --
+            JPanel intervalPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 0));
+
+            JButton daily = new JButton("Daily");
+            daily.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+
+                }
+            });
+
+            JButton weekly = new JButton("Weekly");
+            weekly.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+
+                }
+            });
+
+            JButton monthly = new JButton("Monthly");
+            monthly.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+
+                }
+            });
+
+            intervalPanel.add(daily);
+            intervalPanel.add(weekly);
+            intervalPanel.add(monthly);
+            addComponent(addRegularHabitPanel, intervalPanel, addHabitGbc, 0, 3, 1, 1, GridBagConstraints.CENTER);
+
+
+            addComponent(addRegularHabitPanel, new JSeparator(), addHabitGbc, 0, 4, 1, 1, GridBagConstraints.CENTER);
+
+
+
+            tabbedPane.add("Regular Habit", addRegularHabitPanel);
+
+
+            // ----------------------------------- 
+            // --       Add One-Time Task       -- 
+            // -----------------------------------
+
+            JPanel addTaskPanel = new JPanel(new GridBagLayout());
+            tabbedPane.add("One-time Task", addTaskPanel);
+
+
+            dialog.add(tabbedPane);
+            dialog.setVisible(true);
+            dialog.setLocationRelativeTo(this);
+            dialog.setResizable(false);
+        }
 
         if (command == "Task Finished") {
 

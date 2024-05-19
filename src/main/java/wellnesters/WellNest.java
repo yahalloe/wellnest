@@ -57,9 +57,9 @@ public class WellNest extends JFrame implements ActionListener, ListSelectionLis
         this.setLayout(new BorderLayout());
         this.setTitle("WellNest");
         this.setVisible(true);
-        this.setPreferredSize(new Dimension(500, 800));
-        this.setMinimumSize(new Dimension(500, 800));
-
+        this.setPreferredSize(new Dimension(500, 500));
+        this.setMinimumSize(new Dimension(500, 500));
+        this.setLocationRelativeTo(null);
 
         // [Create DB file (json) if it does not exist]
         File dbFile = new File(dbFileName);
@@ -221,6 +221,7 @@ public class WellNest extends JFrame implements ActionListener, ListSelectionLis
         this.add(header, BorderLayout.NORTH);
         this.add(mainPane, BorderLayout.CENTER);
 
+        
         this.pack();
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
@@ -296,6 +297,7 @@ public class WellNest extends JFrame implements ActionListener, ListSelectionLis
             dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); 
             dialog.setPreferredSize(new Dimension(400, 400));
             dialog.setMinimumSize(new Dimension(400, 400));
+            dialog.setLocationRelativeTo(null);
             JTabbedPane tabbedPane = new JTabbedPane();
 
             // ----------------------------------- 

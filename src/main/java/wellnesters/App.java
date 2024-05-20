@@ -1,5 +1,7 @@
 package wellnesters;
 
+import javax.swing.SwingUtilities;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
@@ -11,5 +13,6 @@ public class App
     public static void main( String[] args )
     {
         new WellNest();
+        SwingUtilities.invokeLater(WellNest::new);
     }
 }

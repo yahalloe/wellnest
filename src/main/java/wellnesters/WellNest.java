@@ -110,7 +110,7 @@ public class WellNest extends JFrame implements ActionListener, ListSelectionLis
         header.setFont(new Font("Inter", Font.BOLD, 32));
 
         // Main Content
-        JTabbedPane mainTabPane = new JTabbedPane(JTabbedPane.LEFT);
+        JTabbedPane mainTabPane = new JTabbedPane(JTabbedPane.NORTH);
 
 
 
@@ -122,9 +122,9 @@ public class WellNest extends JFrame implements ActionListener, ListSelectionLis
         GridBagConstraints todayPanelGbc = new GridBagConstraints();
         todayPanelGbc.fill = GridBagConstraints.VERTICAL;
         // Padding
-        todayPanelGbc.insets = new Insets(5, 0, 5, 0);
+        todayPanelGbc.insets = new Insets(0, 0, 0, 0);
         // Margins
-        todayPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        todayPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 
 
         // -- Calendar panel --

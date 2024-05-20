@@ -206,15 +206,24 @@ public class WellNest extends JFrame implements ActionListener, ListSelectionLis
  
          DefaultListModel<String> regularHabitsModel = new DefaultListModel<>();
          JList<String> regularHabitsList = new JList<>(regularHabitsModel);
- 
+
+         allHabitsTabPane.addTab("REGULAR HABITS", regularHabitsPanel);
+         allHabitsTabPane.addTab("ONE-TIME TASKS", oneTimeTasksPanel);
+
+         allHabitsTabPane.setBackground(Color.gray);
+         allHabitsTabPane.setForeground(Color.blue);
+         
+         
+         regularHabitsModel.addElement("Drink Water");
+         regularHabitsModel.addElement("Water the plants");
+         regularHabitsModel.addElement("yahalloe");
+         regularHabitsModel.addElement("yahalloe");
          regularHabitsModel.addElement("yahalloe");
  
          regularHabitsPanel.add(new JScrollPane(regularHabitsList), BorderLayout.CENTER);
- 
-         allHabitsTabPane.addTab("REGULAR HABITS", regularHabitsPanel);
-         allHabitsTabPane.addTab("ONE-TIME TASKS", oneTimeTasksPanel);
- 
-         allHabitsPanel.add(allHabitsTabPane, BorderLayout.CENTER);
+         allHabitsPanel.add(new JScrollPane(allHabitsTabPane), BorderLayout.CENTER);
+
+
  
 
         // ----------------------------------------------

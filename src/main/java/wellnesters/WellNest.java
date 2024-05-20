@@ -99,7 +99,7 @@ public class WellNest extends JFrame implements ActionListener, ListSelectionLis
         header.setFont(new Font("Inter", Font.BOLD, 32));
 
         // Main Content
-        JTabbedPane mainTabPane = new JTabbedPane();
+        JTabbedPane mainTabPane = new JTabbedPane(JTabbedPane.LEFT);
 
 
 
@@ -194,8 +194,29 @@ public class WellNest extends JFrame implements ActionListener, ListSelectionLis
         // --             All Habits Panel           -- 
         // -------------------------------------------- 
 
-        JPanel allHabitsPanel = new JPanel();
-        allHabitsPanel.add(new JLabel("Content for Tab 3"));
+        JPanel allHabitsPanel = new JPanel(new BorderLayout());
+
+        JTabbedPane allHabitsTabPane = new JTabbedPane();
+
+        JPanel regularHabitsPanel = new JPanel(new BorderLayout());
+        JPanel oneTimeTasksPanel = new JPanel(new BorderLayout());
+
+        DefaultListModel<String> regularHabitsModel = new DefaultListModel<>();
+        JList<String> regularHabitsList = new JList<>(regularHabitsModel);
+
+        regularHabitsModel.addElement("yahalloe");
+
+        regularHabitsPanel.add(new JScrollPane(regularHabitsList), BorderLayout.CENTER);
+
+        allHabitsTabPane.addTab("REGULAR HABITS", regularHabitsPanel);
+        allHabitsTabPane.addTab("ONE-TIME TASKS", oneTimeTasksPanel);
+
+        allHabitsPanel.add(allHabitsTabPane, BorderLayout.CENTER);
+
+
+        // ----------------------------------------------
+        // --        end of All Habits Panel           -- 
+        // ---------------------------------------------- 
 
         // Add panels to the tabbed pane with tab titles
         mainTabPane.addTab("Today", todayPanel);
@@ -206,6 +227,8 @@ public class WellNest extends JFrame implements ActionListener, ListSelectionLis
 
         this.add(header, BorderLayout.NORTH);
         this.add(mainPane, BorderLayout.CENTER);
+
+        setLocationRelativeTo(null);
 
         this.pack();
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

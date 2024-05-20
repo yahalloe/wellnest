@@ -258,7 +258,7 @@ public class WellNest extends JFrame implements ActionListener, ListSelectionLis
             JTabbedPane tabbedPane = new JTabbedPane();
 
             // ----------------------------------- 
-            // --       Add Regular Habit       -- 
+            // --      Add Regular Habit       -- 
             // -----------------------------------
 
             JPanel addRegularHabitPanel = new JPanel(new GridBagLayout());

@@ -82,25 +82,24 @@ public class WellNest extends JFrame {
         // --             All Habits Panel           -- 
         // -------------------------------------------- 
 
-        JPanel allHabitsPanel = new JPanel();
+        JPanel allHabitsPanel = new JPanel(new BorderLayout());
 
         JTabbedPane allHabitsTabPane = new JTabbedPane();
 
-        JPanel regulatHabitsPanel = new JPanel(new BorderLayout());
+        JPanel regularHabitsPanel = new JPanel(new BorderLayout());
         JPanel oneTimeTasksPanel = new JPanel(new BorderLayout());
 
         DefaultListModel<String> regularHabitsModel = new DefaultListModel<>();
-        JList <String> regularHabitsList = new JList<String>(regularHabitsModel);
+        JList<String> regularHabitsList = new JList<>(regularHabitsModel);
 
         regularHabitsModel.addElement("yahalloe");
 
-        regulatHabitsPanel.add(regularHabitsList);
+        regularHabitsPanel.add(new JScrollPane(regularHabitsList), BorderLayout.CENTER);
 
-        allHabitsTabPane.addTab("REGULAR HABITS", regulatHabitsPanel);
+        allHabitsTabPane.addTab("REGULAR HABITS", regularHabitsPanel);
         allHabitsTabPane.addTab("ONE-TIME TASKS", oneTimeTasksPanel);
-        
 
-        allHabitsPanel.add(allHabitsTabPane);
+        allHabitsPanel.add(allHabitsTabPane, BorderLayout.CENTER);
 
 
         // ----------------------------------------------

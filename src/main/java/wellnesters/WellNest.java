@@ -110,7 +110,7 @@ public class WellNest extends JFrame implements ActionListener, ListSelectionLis
         header.setFont(new Font("Inter", Font.BOLD, 32));
 
         // Main Content
-        JTabbedPane mainTabPane = new JTabbedPane(JTabbedPane.LEFT);
+        JTabbedPane mainTabPane = new JTabbedPane(JTabbedPane.NORTH);
 
 
 

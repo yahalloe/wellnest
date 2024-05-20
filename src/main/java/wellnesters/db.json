@@ -6,5 +6,6 @@
     "totalTimesCompleted": 0,
     "totalDays": 0
   },
-  "completionTimes": []
+  "completionTimes": [],
+  "datesCompleted": {}
 }

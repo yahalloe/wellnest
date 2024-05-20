@@ -57,8 +57,8 @@ public class WellNest extends JFrame implements ActionListener, ListSelectionLis
         this.setLayout(new BorderLayout());
         this.setTitle("WellNest");
         this.setVisible(true);
-        this.setPreferredSize(new Dimension(500, 500));
-        this.setMinimumSize(new Dimension(500, 500));
+        this.setPreferredSize(new Dimension(600, 500));
+        this.setMinimumSize(new Dimension(600, 500));
         this.setLocationRelativeTo(null);
 
         // [Create DB file (json) if it does not exist]
@@ -128,7 +128,7 @@ public class WellNest extends JFrame implements ActionListener, ListSelectionLis
 
 
         // -- Calendar panel --
-        JPanel todayCalendarPanel = new JPanel();
+        // JPanel todayCalendarPanel = new JPanel();
         JLabel todayCalendarPlacdeholder = new JLabel("Calendar Placeholder");
         addComponent(todayPanel, todayCalendarPlacdeholder, todayPanelGbc, 0, 0, 1, 1, GridBagConstraints.WEST);
 
@@ -186,23 +186,49 @@ public class WellNest extends JFrame implements ActionListener, ListSelectionLis
         // -------------------------------------------- 
         // --             Stats Panel                -- 
         // -------------------------------------------- 
-        JPanel statsPanel = new JPanel(new GridLayout(5, 2));
+        JPanel statsPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints statsPanelGbc = new GridBagConstraints();
+        statsPanelGbc.fill = GridBagConstraints.VERTICAL;
+        // Padding
+        statsPanelGbc.insets = new Insets(5, 0, 5, 0);
+        // Margins
+        statsPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+
+        //removed
+        // JPanel statsPanel = new JPanel(new GridLayout(5, 2));
         currentStreakLabel = new JLabel(String.valueOf(wellNestData.stats.currentStreak));
         longestStreakLabel = new JLabel(String.valueOf(wellNestData.stats.longestStreak));
         totalPerfectDaysLabel = new JLabel(String.valueOf(wellNestData.stats.totalPerfectDays));
         totalTimesCompletedLabel = new JLabel(String.valueOf(wellNestData.stats.totalTimesCompleted));
         totalDaysLabel = new JLabel(String.valueOf(wellNestData.stats.totalDays));
 
-        statsPanel.add(new JLabel("Current Streak: "));
-        statsPanel.add(currentStreakLabel);
-        statsPanel.add(new JLabel("Longest Streak: "));
-        statsPanel.add(longestStreakLabel);
-        statsPanel.add(new JLabel("Total Perfect Days: "));
-        statsPanel.add(totalPerfectDaysLabel);
-        statsPanel.add(new JLabel("Total Times Completed: "));
-        statsPanel.add(totalTimesCompletedLabel);
-        statsPanel.add(new JLabel("Total Days: "));
-        statsPanel.add(totalDaysLabel);
+        // -- Calendar panel --
+        JPanel statsCalendarPanel = new JPanel();
+        JLabel statsCalendarPlacdeholder = new JLabel("Calendar Placeholder");
+        addComponent(statsPanel, statsCalendarPlacdeholder, statsPanelGbc, 0, 0, 1, 1, GridBagConstraints.WEST);
+
+        JPanel streakListGrp = new JPanel();
+        streakListGrp.setLayout(new BoxLayout(streakListGrp, BoxLayout.Y_AXIS));
+        
+        streakListGrp.add(Box.createVerticalStrut(200));
+        streakListGrp.add(new JLabel("Current Streak: "));
+        streakListGrp.add(currentStreakLabel);
+        streakListGrp.add(Box.createVerticalStrut(20));
+        streakListGrp.add(new JLabel("Longest Streak: "));
+        streakListGrp.add(longestStreakLabel);
+        streakListGrp.add(Box.createVerticalStrut(20));
+        streakListGrp.add(new JLabel("Total Perfect Days: "));
+        streakListGrp.add(totalPerfectDaysLabel);
+        streakListGrp.add(Box.createVerticalStrut(20));
+        streakListGrp.add(new JLabel("Total Times Completed: "));
+        streakListGrp.add(totalTimesCompletedLabel);
+        streakListGrp.add(Box.createVerticalStrut(20));
+        streakListGrp.add(new JLabel("Total Days: "));
+        streakListGrp.add(totalDaysLabel);
+        streakListGrp.add(Box.createVerticalStrut(20));
+
+        addComponent(statsPanel, streakListGrp, statsPanelGbc, 
+        0, 1, 1, 1, GridBagConstraints.WEST);
 
         // -------------------------------------------- 
         // --             All Habits Panel           -- 

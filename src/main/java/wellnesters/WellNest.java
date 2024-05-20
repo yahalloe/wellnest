@@ -55,7 +55,7 @@ public class WellNest extends JFrame {
         JLabel header = new JLabel("Health and Fitness Trackers", SwingConstants.CENTER);
 
         // Main Content
-        JTabbedPane mainTabPane = new JTabbedPane();
+        JTabbedPane mainTabPane = new JTabbedPane(JTabbedPane.LEFT);
 
 
 
@@ -83,11 +83,29 @@ public class WellNest extends JFrame {
         // -------------------------------------------- 
 
         JPanel allHabitsPanel = new JPanel();
-        allHabitsPanel.add(new JLabel("Content for Tab 3"));
+
+        JTabbedPane allHabitsTabPane = new JTabbedPane();
+
+        JPanel regulatHabitsPanel = new JPanel(new BorderLayout());
+        JPanel oneTimeTasksPanel = new JPanel(new BorderLayout());
+
+        DefaultListModel<String> regularHabitsModel = new DefaultListModel<>();
+        JList <String> regularHabitsList = new JList<String>(regularHabitsModel);
+
+        regularHabitsModel.addElement("yahalloe");
+
+        regulatHabitsPanel.add(regularHabitsList);
+
+        allHabitsTabPane.addTab("REGULAR HABITS", regulatHabitsPanel);
+        allHabitsTabPane.addTab("ONE-TIME TASKS", oneTimeTasksPanel);
+        
+
+        allHabitsPanel.add(allHabitsTabPane);
 
 
-
-
+        // ----------------------------------------------
+        // --        end of All Habits Panel           -- 
+        // ---------------------------------------------- 
 
         // Add panels to the tabbed pane with tab titles
         mainTabPane.addTab("Today", todayPanel);
@@ -98,5 +116,7 @@ public class WellNest extends JFrame {
 
         this.add(header, BorderLayout.NORTH);
         this.add(mainPane, BorderLayout.CENTER);
+
+        setLocationRelativeTo(null);
     }
 }

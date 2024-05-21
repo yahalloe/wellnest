@@ -1,3 +1,8 @@
+//author: gartly
+//purpose: This file creates a GUI that allows the user to input their personal information and displays it back to them.
+//usage: The user inputs their name, birth
+//this code might be useful in the future
+
 package wellnesters;
 
 import javax.swing.*;

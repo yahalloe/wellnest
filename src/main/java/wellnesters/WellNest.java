@@ -15,6 +15,8 @@ import java.util.HashSet;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.time.format.TextStyle;
+import java.util.Locale;
 
 // 3rd-Party (Downloaded) Classes
 import com.google.gson.Gson;
@@ -46,15 +48,18 @@ public class WellNest extends JFrame implements ActionListener, ListSelectionLis
     private JLabel totalPerfectDaysLabel;
     private JLabel totalDaysLabel;
     private JLabel totalTimesCompletedLabel;
+    
 
-    //Info
-    private JFrame frame;
-    private JTextField nameField;
-    private JTextField birthDateField;
-    private JTextField genderField;
-    private JTextField heightField;
-    private JTextField weightField;
-    private JTextArea outputArea;
+    //author: gartly
+    //ignore this
+    //personal info
+    // private JFrame frame;
+    // private JTextField nameField;
+    // private JTextField birthDateField;
+    // private JTextField genderField;
+    // private JTextField heightField;
+    // private JTextField weightField;
+    // private JTextArea outputArea;
 
     // Add Habit Dialog
     private JTextField regularHabitTextField;
@@ -216,9 +221,8 @@ public class WellNest extends JFrame implements ActionListener, ListSelectionLis
         totalDaysLabel = new JLabel(String.valueOf(wellNestData.stats.totalDays));
 
         // -- Calendar panel --
-        JPanel statsCalendarPanel = new JPanel();
-        JLabel statsCalendarPlacdeholder = new JLabel("Calendar Placeholder");
-        addComponent(statsPanel, statsCalendarPlacdeholder, statsPanelGbc, 0, 0, 1, 1, GridBagConstraints.WEST);
+        // SimpleCalendar simpleCalendar = new SimpleCalendar();
+        // addComponent(statsPanel, simpleCalendar, statsPanelGbc, 0, 0, 1, 1, GridBagConstraints.WEST);
 
         JPanel streakListGrp = new JPanel();
         streakListGrp.setLayout(new BoxLayout(streakListGrp, BoxLayout.Y_AXIS));
@@ -528,6 +532,7 @@ public class WellNest extends JFrame implements ActionListener, ListSelectionLis
     class CompletionTime {
         LocalDateTime timestamp;
     }
+    
 
     
 

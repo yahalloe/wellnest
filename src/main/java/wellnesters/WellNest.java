@@ -4,6 +4,7 @@ package wellnesters;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.event.*;
 import java.text.NumberFormat;
 import java.io.*;
@@ -15,8 +16,6 @@ import java.util.HashSet;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.time.format.TextStyle;
-import java.util.Locale;
 
 // 3rd-Party (Downloaded) Classes
 import com.google.gson.Gson;
@@ -24,6 +23,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.toedter.calendar.JCalendar;
+
 
 // Local Classes
 
@@ -48,18 +49,6 @@ public class WellNest extends JFrame implements ActionListener, ListSelectionLis
     private JLabel totalPerfectDaysLabel;
     private JLabel totalDaysLabel;
     private JLabel totalTimesCompletedLabel;
-    
-
-    //author: gartly
-    //ignore this
-    //personal info
-    // private JFrame frame;
-    // private JTextField nameField;
-    // private JTextField birthDateField;
-    // private JTextField genderField;
-    // private JTextField heightField;
-    // private JTextField weightField;
-    // private JTextArea outputArea;
 
     // Add Habit Dialog
     private JTextField regularHabitTextField;
@@ -201,9 +190,6 @@ public class WellNest extends JFrame implements ActionListener, ListSelectionLis
         // -------------------------------------------- 
         // --             Stats Panel                -- 
         // -------------------------------------------- 
-        /**
-         * @author: Ejanng
-         */
         JPanel statsPanel = new JPanel(new GridBagLayout());
         GridBagConstraints statsPanelGbc = new GridBagConstraints();
         statsPanelGbc.fill = GridBagConstraints.VERTICAL;
@@ -221,8 +207,8 @@ public class WellNest extends JFrame implements ActionListener, ListSelectionLis
         totalDaysLabel = new JLabel(String.valueOf(wellNestData.stats.totalDays));
 
         // -- Calendar panel --
-        // SimpleCalendar simpleCalendar = new SimpleCalendar();
-        // addComponent(statsPanel, simpleCalendar, statsPanelGbc, 0, 0, 1, 1, GridBagConstraints.WEST);
+        CalendarPanel statsCalendarPanel = new CalendarPanel();
+        addComponent(statsPanel, statsCalendarPanel, statsPanelGbc, 0, 0, 1, 1, GridBagConstraints.WEST);
 
         JPanel streakListGrp = new JPanel();
         streakListGrp.setLayout(new BoxLayout(streakListGrp, BoxLayout.Y_AXIS));
@@ -252,6 +238,7 @@ public class WellNest extends JFrame implements ActionListener, ListSelectionLis
         // -------------------------------------------- 
         /**
          * @author: yahalloe
+         * @date: 2024-5-20
          */
 
          JPanel allHabitsPanel = new JPanel(new BorderLayout());
@@ -262,17 +249,44 @@ public class WellNest extends JFrame implements ActionListener, ListSelectionLis
          JPanel oneTimeTasksPanel = new JPanel(new BorderLayout());
  
          DefaultListModel<String> regularHabitsModel = new DefaultListModel<>();
+         DefaultListModel<String> oneTimeHabitsModel = new DefaultListModel<>();
+
          JList<String> regularHabitsList = new JList<>(regularHabitsModel);
- 
-         regularHabitsModel.addElement("yahalloe");
- 
-         regularHabitsPanel.add(new JScrollPane(regularHabitsList), BorderLayout.CENTER);
- 
+         JList<String> oneTimeHabitsList = new JList<>(oneTimeHabitsModel);
+
          allHabitsTabPane.addTab("REGULAR HABITS", regularHabitsPanel);
          allHabitsTabPane.addTab("ONE-TIME TASKS", oneTimeTasksPanel);
- 
-         allHabitsPanel.add(allHabitsTabPane, BorderLayout.CENTER);
- 
+
+        //tabs coloring
+        allHabitsTabPane.setForeground(Color.blue);
+        allHabitsTabPane.setBackground(Color.gray);
+        
+        // plane coloring
+        regularHabitsList.setBackground(Color.LIGHT_GRAY);  
+        regularHabitsPanel.setBackground(Color.LIGHT_GRAY);  
+        oneTimeTasksPanel.setBackground(Color.LIGHT_GRAY);
+        oneTimeHabitsList.setBackground(Color.LIGHT_GRAY);
+
+        //list styling
+        regularHabitsList.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        oneTimeHabitsList.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+
+        // Custom cell renderer to add borders to each item
+        regularHabitsList.setCellRenderer(new CustomListCellRenderer());
+        oneTimeHabitsList.setCellRenderer(new CustomListCellRenderer());
+
+        regularHabitsModel.addElement("Drink Water");
+        regularHabitsModel.addElement("Water the plants");
+        regularHabitsModel.addElement("yahalloe");
+
+        oneTimeHabitsModel.addElement("Drink Water");
+        oneTimeHabitsModel.addElement("Water the plants");
+        oneTimeHabitsModel.addElement("yahalloe");
+
+        regularHabitsPanel.add(new JScrollPane(regularHabitsList), BorderLayout.CENTER);
+        oneTimeTasksPanel.add(new JScrollPane(oneTimeHabitsList), BorderLayout.CENTER);
+        allHabitsPanel.add(new JScrollPane(allHabitsTabPane), BorderLayout.CENTER);
+        
 
         // ----------------------------------------------
         // --        end of All Habits Panel           -- 
@@ -532,7 +546,40 @@ public class WellNest extends JFrame implements ActionListener, ListSelectionLis
     class CompletionTime {
         LocalDateTime timestamp;
     }
+
+
+    //calendar
+    class CalendarPanel extends JPanel {
+        public CalendarPanel() {
+            this.setLayout(new BorderLayout());
+    
+            // Create a simple calendar display
+            JLabel monthLabel = new JLabel(LocalDate.now().getMonth().toString(), SwingConstants.CENTER);
+            monthLabel.setFont(new Font("Inter", Font.BOLD, 24));
+            this.add(monthLabel, BorderLayout.NORTH);
+    
+            JPanel daysPanel = new JPanel(new GridLayout(0, 7)); // 7 columns for days of the week
+            for (int i = 1; i <= LocalDate.now().lengthOfMonth(); i++) {
+                daysPanel.add(new JLabel(String.valueOf(i), SwingConstants.CENTER));
+            }
+            this.add(daysPanel, BorderLayout.CENTER);
+        }
+    }
     
 
-    
-
+    /**
+     * custom cell renderer for JList (all habits panel)
+     */
+    class CustomListCellRenderer extends DefaultListCellRenderer {
+        @Override
+        public Component getListCellRendererComponent(JList<?> list, Object value, int index,
+                                                    boolean isSelected, boolean cellHasFocus) {
+            JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+            Border lineBorder = BorderFactory.createLineBorder(Color.BLACK, 1);
+            Border paddingBorder = BorderFactory.createEmptyBorder(10, 10, 10, 10); // 10 pixels padding
+            label.setBorder(BorderFactory.createCompoundBorder(lineBorder, paddingBorder));
+            // Set horizontal alignment to center
+            label.setHorizontalAlignment(SwingConstants.CENTER);
+            return label;
+        }
+    }
